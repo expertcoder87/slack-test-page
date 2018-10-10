@@ -6,7 +6,7 @@
         <%= f.hidden_field :email %>
         <div class="form-group">
           <label>Full name</label>
-          <%= f.text_field :name, placeholder: "Full Name", autofocus: true, autocomplete: "email", class: "form-control" %>
+          <%= f.text_field :name, placeholder: "Full Name", class: "form-control" %>
         </div>
         <div class="form-group">
           <label>Password</label>
@@ -33,9 +33,11 @@
       return;
     }
     regex = new Array();
+    regex.push("[A-Z]");
     regex.push("[a-z]");
     regex.push("[0-9]");
-    passed = 0;
+    regex.push("[$@$!%*#?&]");
+    passed = 0
     i = 0;
     while (i < 3) {
       if (new RegExp(regex[i]).test($(this).val())) {
@@ -54,9 +56,21 @@
         strength = "Password must be alphanumeric";
         color = "red";
         break;
+      case 3:
+        strength = "Weak";
+        color = "red";
+        break;
       case 4:
-        strength = "";
-        color = "";      
+        strength = "Good";
+        color = "darkorange";
+        break;
+      case 5:
+        strength = "Strong";
+        color = "green";
+        break;
+      case 6:
+        strength = "Very Strong";
+        color = "darkgreen";
     }
     if ($(this).val().length > 5) {
       if (['password','123456', '123123', 'abcde'].indexOf($(this).val()) >= 0) {
